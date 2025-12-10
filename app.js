@@ -11,7 +11,7 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 let db = firebase.firestore();
-
+let fb = firebase.auth();
 let messagesDiv = document.getElementById("messages");
 let sendButton = document.getElementById("send-button");
 let messageInput = document.getElementById("message-input");
@@ -92,3 +92,11 @@ messageInput.addEventListener("keydown", (e) => {
     sendButton.click();
   }
 });
+function signOut() {
+  localStorage.clear();
+  fb.signOut()
+    .then(() => {
+      window.location.href = "./index.html";
+    })
+    .catch((error) => {});
+}

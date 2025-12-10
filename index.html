@@ -3,31 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Firebase Chat</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Firebase Auth & Firestore Example</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="chat-container">
-      <header id="chat-header">
-        <h1>My Chat Room (Firestore)</h1>
-      </header>
+    <div class="login-container">
+      <h1>Welcome</h1>
+      <p>Sign in or create a new account</p>
 
-      <main id="messages"></main>
+      <p id="message"></p>
 
-      <footer id="input-container">
-        <input type="text" id="username" placeholder="Your Name" />
-        <input type="text" id="message-input" placeholder="Type a message..." />
-        <button id="send-button">
-          <svg viewBox="0 0 24 24">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-          </svg>
-        </button>
-      </footer>
+      <div class="input-group">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+
+      <div class="forgot-password-container">
+        <a href="#" onClick="forgotPassword()">Forgot Password?</a>
+      </div>
+      <div class="button-group">
+        <button class="btn-secondary" onClick="signUp()">Sign Up</button>
+        <button class="btn-primary" onClick="signIn()">Sign In</button>
+      </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-    
-    <script src="app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-auth-compat.js"></script>
+
+    <script src="script.js"></script>
   </body>
 </html>

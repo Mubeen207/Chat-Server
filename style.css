@@ -1,34 +1,20 @@
-:root {
-  --whatsapp-dark-green: #075e54;
-  --whatsapp-light-green: #128c7e;
-  --whatsapp-teal-green: #25d366;
-  --whatsapp-outgoing-bg: #d9fdd3;
-  --whatsapp-incoming-bg: #fff;
-  --whatsapp-background: #ece5dd;
-  --whatsapp-wallpaper: url("https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2023/05/WhatsApp.jpg?ssl=1&quality=80&w=f");
-  --whatsapp-text-primary: #111;
-  --whatsapp-text-secondary: #667781;
-  --whatsapp-border: #ddd;
-}
-
 body {
+  position: relative;
   font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #222;
-  background-image: var(--whatsapp-wallpaper);
-  background-size: cover;
   background-repeat: repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  color: var(--whatsapp-text-primary);
+  color: #111;
 }
 
 #chat-container {
   width: 100vw;
   height: 100vh;
-  background: var(--whatsapp-background);
+  background: #ece5dd;
   display: flex;
   flex-direction: column;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
@@ -127,7 +113,7 @@ body {
   display: flex;
   align-items: center;
   padding: 14px 18px;
-  background-color: var(--whatsapp-dark-green);
+  background-color: #075e54;
   color: white;
   flex-shrink: 0;
   gap: 12px;
@@ -186,7 +172,7 @@ body {
 }
 
 .message.sent {
-  background-color: var(--whatsapp-outgoing-bg);
+  background-color: #d9fdd3;
   align-self: flex-end;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 8px;
@@ -196,7 +182,7 @@ body {
 }
 
 .message.received {
-  background-color: var(--whatsapp-incoming-bg);
+  background-color: white;
   align-self: flex-start;
   border-top-left-radius: 2px;
   border-bottom-right-radius: 8px;
@@ -209,12 +195,12 @@ body {
   font-weight: 600;
   margin-bottom: 4px;
   font-size: 0.85rem;
-  color: var(--whatsapp-light-green);
+  color: #128c7e;
 }
 
 .message .meta {
   font-size: 0.75rem;
-  color: var(--whatsapp-text-secondary);
+  color: #667781;
   margin-top: 2px;
   align-self: flex-end;
   opacity: 0.7;
@@ -222,7 +208,7 @@ body {
 
 .message.sent .meta::after {
   content: "✓✓";
-  color: var(--whatsapp-teal-green);
+  color: #25d366;
   font-size: 0.8em;
   margin-left: 4px;
   vertical-align: middle;
@@ -261,7 +247,7 @@ body {
 }
 
 #send-button {
-  background: var(--whatsapp-light-green);
+  background: #128c7e;
   border: none;
   width: 48px;
   height: 48px;
@@ -293,4 +279,44 @@ body {
 
 .message strong {
   color: #333;
+}
+
+.signout {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  padding: 10px 18px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.signout:hover {
+  background: white;
+  color: red;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+}
+
+@media (max-width: 600px) {
+  .signout {
+    background: #fff;
+    color: #e53935;
+    border-color: #e53935;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .signout:focus {
+    background: #fff;
+    color: #e53935;
+    transform: none;
+    box-shadow: none;
+  }
 }
