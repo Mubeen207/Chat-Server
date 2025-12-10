@@ -84,4 +84,3 @@ function forgotPassword() {
       message.classList.add("show", "message-error");
     });
 }
-
