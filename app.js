@@ -60,7 +60,7 @@ db.collection("messages")
     }
   );
 
-sendButton.addEventListener("click", () => {
+function sendBtn() {
   let username = usernameInput.value.trim();
   let text = messageInput.value.trim();
 
@@ -85,7 +85,7 @@ sendButton.addEventListener("click", () => {
     .catch((error) => {
       console.error("Error sending message: ", error);
     });
-});
+};
 
 messageInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {

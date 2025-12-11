@@ -84,3 +84,20 @@ function forgotPassword() {
       message.classList.add("show", "message-error");
     });
 }
+
+function loginChk() {
+  let stored = localStorage.getItem("uid");
+  let uid = [];
+
+  if (stored) {
+    try {
+      uid = JSON.parse(stored).uid || [];
+    } catch (e) {
+      uid = [];
+    }
+  }
+
+  if (uid.length > 0) {
+    window.location.href = "./application.html";
+  }
+}
