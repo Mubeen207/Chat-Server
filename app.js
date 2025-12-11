@@ -15,8 +15,7 @@ let fb = firebase.auth();
 let messagesDiv = document.getElementById("messages");
 let sendButton = document.getElementById("send-button");
 let messageInput = document.getElementById("message-input");
-let usernameInput = document.getElementById("username");
-
+let nameStore = "";
 function formatTimestamp(timestamp) {
   if (timestamp && typeof timestamp.toDate === "function") {
     const date = timestamp.toDate();
@@ -56,12 +55,12 @@ db.collection("messages")
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
     },
     (error) => {
-      console.error("Error listening to messages: ", error);
+      alert("Error listening to messages: ", error);
     }
   );
 
 function sendBtn() {
-  let username = usernameInput.value.trim();
+  let username = nameStore;
   let text = messageInput.value.trim();
 
   if (text === "") {
@@ -83,9 +82,9 @@ function sendBtn() {
       messageInput.value = "";
     })
     .catch((error) => {
-      console.error("Error sending message: ", error);
+      alert("Error sending message: ", error);
     });
-};
+}
 
 messageInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
@@ -99,4 +98,22 @@ function signOut() {
       window.location.href = "./index.html";
     })
     .catch((error) => {});
+}
+function getUserData() {
+  let uid = JSON.parse(localStorage.getItem("uid")).uid;
+  db.collection("users")
+    .doc(uid)
+    .onSnapshot(
+      (doc) => {
+        if (doc.exists) {
+          let userData = doc.data();
+          nameStore = userData.name;
+        } else {
+          alert("User Not Found");
+        }
+      },
+      (error) => {
+        alert("User data fetch error:", error);
+      }
+    );
 }

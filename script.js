@@ -10,22 +10,71 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 let fb = firebase.auth();
 const db = firebase.firestore();
+let nameEl = document.getElementById("name");
 let emailEl = document.getElementById("email");
 let passwordEl = document.getElementById("password");
 let message = document.getElementById("message");
 let addBtn = document.getElementById("addBtn");
 
 function signUp() {
+  if (!nameEl.value || !emailEl.value || !passwordEl.value) {
+    message.innerHTML = "Please enter your name, email, and password."; 
+    message.classList.add("show", "message-error");
+    message.classList.remove("message-success");
+    return;
+  }
+
   fb.createUserWithEmailAndPassword(emailEl.value, passwordEl.value)
     .then((userCredential) => {
-      var user = userCredential.user;
-      message.innerHTML = "Sign up Successful";
-      message.style.color = "green";
-      location.href = "./application.html";
-      localStorage.setItem("uid", JSON.stringify(fb.currentUser));
+      let user = userCredential.user;
+
+      return db
+        .collection("users")
+        .doc(user.uid)
+        .set({
+          name: nameEl.value,
+          email: emailEl.value,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+
+        .then(() => {
+          message.innerHTML =
+            "Sign up successful! Account and data have been saved.";
+          message.style.color = "green";
+          message.classList.remove("message-error");
+          message.classList.add("show", "message-success");
+
+          localStorage.setItem("uid", JSON.stringify(fb.currentUser));
+          location.href = "./application.html";
+        })
+
+        .catch((firestoreError) => {
+          console.error(
+            "Firestore Saving Error. Starting Rollback...",
+            firestoreError
+          );
+          message.innerHTML =
+            "Data saving failed. Rolling back account creation. Please try again. (Error: Firestore)";
+          message.classList.add("show", "message-error");
+          message.classList.remove("message-success");
+
+          return user
+            .delete()
+            .then(() => {
+              console.log("Unsynced Auth User deleted.");
+            })
+            .catch((deleteError) => {
+              console.error(
+                "Rollback Error: Failed to delete Auth user.",
+                deleteError
+              );
+              message.innerHTML =
+                "Failed to save data and failed to delete the unsynced account. Please contact support.";
+            });
+        });
     })
-    .catch((error) => {
-      let errorCode = error.code;
+    .catch((authError) => {
+      let errorCode = authError.code;
       message.innerHTML = errorMessage(errorCode);
 
       message.classList.add("show", "message-error");
@@ -76,7 +125,7 @@ function forgotPassword() {
   message.classList.remove("show", "message-error", "message-success");
   fb.sendPasswordResetEmail(email)
     .then(() => {
-      message.innerHTML = "Password reset email sent! Please check your inbox.";
+      message.innerHTML = "Password reset email sent! Please check your email spam.";
       message.classList.add("show", "message-success");
     })
     .catch((error) => {
@@ -99,5 +148,42 @@ function loginChk() {
 
   if (uid.length > 0) {
     window.location.href = "./application.html";
+  }
+}
+
+function showForm(mode) {
+  const nameGroup = document.getElementById("nameGroup");
+  const actionButton = document.getElementById("actionButton");
+  const forgotPasswordContainer = document.getElementById(
+    "forgotPasswordContainer"
+  );
+  const showSignInBtn = document.getElementById("showSignInBtn");
+  const showSignUpBtn = document.getElementById("showSignUpBtn");
+
+  showSignInBtn.classList.remove("active");
+  showSignUpBtn.classList.remove("active");
+
+  if (mode === "signIn") {
+    nameGroup.classList.remove("visible-transition");
+    nameGroup.classList.add("hidden-transition");
+
+    forgotPasswordContainer.classList.remove("hidden-transition");
+    forgotPasswordContainer.classList.add("visible-transition");
+
+    actionButton.textContent = "Sign In";
+    actionButton.setAttribute("onClick", "signIn()");
+
+    showSignInBtn.classList.add("active");
+  } else if (mode === "signUp") {
+    nameGroup.classList.remove("hidden-transition");
+    nameGroup.classList.add("visible-transition");
+
+    forgotPasswordContainer.classList.remove("visible-transition");
+    forgotPasswordContainer.classList.add("hidden-transition");
+
+    actionButton.textContent = "Sign Up";
+    actionButton.setAttribute("onClick", "signUp()");
+
+    showSignUpBtn.classList.add("active");
   }
 }

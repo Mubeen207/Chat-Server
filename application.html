@@ -6,7 +6,7 @@
     <title>Firebase Chat</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body onload="getUserData()">
     <button class="signout" onClick="signOut()">Sign out</button>
     <div id="chat-container">
       <header id="chat-header">
@@ -16,7 +16,6 @@
       <main id="messages"></main>
 
       <footer id="input-container">
-        <input type="text" id="username" placeholder="Your Name" />
         <input type="text" id="message-input" placeholder="Type a message..." />
         <button id="send-button" onclick="sendBtn()">
           <svg viewBox="0 0 24 24">

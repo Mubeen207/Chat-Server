@@ -137,3 +137,58 @@ body {
   color: #128c7e;
   text-decoration: underline;
 }
+
+.top-button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.top-button-group button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: bold;
+  flex-grow: 1;
+  transition: all 0.2s ease;
+}
+.top-button-group .active {
+  background-color: #128c7e;
+  color: white;
+  border-color: #128c7e;
+}
+.top-button-group button:first-child {
+  border-right: none;
+}
+.top-button-group button:last-child {
+  border-left: none;
+}
+
+#nameGroup,
+#forgotPasswordContainer {
+  overflow: hidden;
+
+  transition: max-height 0.4s ease-out, opacity 0.4s ease-out,
+    margin-bottom 0.4s ease-out;
+}
+
+.hidden-transition {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.visible-transition {
+  max-height: 80px !important;
+  opacity: 1 !important;
+}
+
+#nameGroup.visible-transition {
+  margin-bottom: 15px;
+}

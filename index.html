@@ -13,31 +13,50 @@
 
       <p id="message"></p>
 
-      <div class="input-group">
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          required
-        />
+      <div class="top-button-group">
+        <button id="showSignInBtn" class="active" onClick="showForm('signIn')">
+          Sign In
+        </button>
+        <button id="showSignUpBtn" onClick="showForm('signUp')">Sign Up</button>
       </div>
 
-      <div class="forgot-password-container">
+      <div id="formFields">
+        <div class="input-group hidden-transition" id="nameGroup">
+          <input type="text" name="name" id="name" placeholder="Name" />
+        </div>
+
+        <div class="input-group">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+      </div>
+
+      <div
+        class="forgot-password-container visible-transition"
+        id="forgotPasswordContainer"
+      >
         <a href="#" onClick="forgotPassword()">Forgot Password?</a>
       </div>
+
       <div class="button-group">
-        <button class="btn-secondary" onClick="signUp()">Sign Up</button>
-        <button class="btn-primary" onClick="signIn()">Sign In</button>
+        <button class="btn-primary" id="actionButton" onClick="signIn()">
+          Sign In
+        </button>
       </div>
     </div>
 
